@@ -1,0 +1,6 @@
+.gradle
+.idea
+
+# General build files
+**/build/*
+**/out/*

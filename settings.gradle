@@ -1,0 +1,16 @@
+pluginManagement {
+    plugins {
+        id 'org.jetbrains.kotlin.jvm' version kotlinVersion
+        id 'biz.aQute.bnd.builder' version bndVersion
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+
+include 'caged-api'
+include 'caged-impl'
+include 'testing'

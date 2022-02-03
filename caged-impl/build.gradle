@@ -1,0 +1,32 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id 'biz.aQute.bnd.builder'
+    id 'java-library'
+}
+
+configurations {
+    bundle {
+        canBeResolved = false
+    }
+}
+
+dependencies {
+    api project(':caged-api')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    implementation "org.slf4j:slf4j-api:$slf4jVersion"
+    compileOnly "org.osgi:osgi.core:$osgiVersion"
+    compileOnly "org.osgi:org.osgi.service.component.annotations:$osgiScrAnnotationVersion"
+}
+
+def jar = tasks.named('jar', Jar) {
+    bundle {
+        bnd '''\
+Bundle-Name: Caged Bundle Implementation
+Bundle-SymbolicName: com.example.caged.impl
+'''
+    }
+}
+
+artifacts {
+    bundle jar
+}

@@ -1,0 +1,19 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+    id 'biz.aQute.bnd.builder'
+    id 'java-library'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion"
+    compileOnly "org.osgi:osgi.annotation:$osgiVersion"
+}
+
+def jar = tasks.named('jar', Jar) {
+    bundle {
+        bnd '''\
+Bundle-Name: Caged API
+Bundle-SymbolicName: com.example.caged.api
+'''
+    }
+}

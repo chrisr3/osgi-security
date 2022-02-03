@@ -1,0 +1,45 @@
+import static org.gradle.api.JavaVersion.VERSION_11
+import static org.gradle.jvm.toolchain.JavaLanguageVersion.of
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+plugins {
+    id 'org.jetbrains.kotlin.jvm' apply false
+    id 'base'
+}
+
+def javaVersion = VERSION_11
+
+subprojects {
+    group 'com.example'
+    version '1.0-SNAPSHOT'
+
+    pluginManager.withPlugin('java') {
+        java {
+            toolchain {
+                languageVersion = of(javaVersion.majorVersion.toInteger())
+            }
+        }
+    }
+
+    pluginManager.withPlugin('org.jetbrains.kotlin.jvm') {
+        tasks.withType(KotlinCompile).configureEach {
+            kotlinOptions {
+                allWarningsAsErrors = true
+                languageVersion = '1.4'
+                apiVersion = '1.4'
+                jvmTarget = javaVersion
+                javaParameters = true
+                freeCompilerArgs += [
+                    '-Xskip-runtime-version-check',
+                    '-java-parameters',
+                    '-Xjvm-default=all'
+                ]
+            }
+        }
+    }
+}
+
+wrapper {
+    gradleVersion = '7.3.3'
+    distributionType = Wrapper.DistributionType.BIN
+}
